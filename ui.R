@@ -5,277 +5,274 @@ load(file = "/home/nikolaeva/AgedBrain/ppi2_data/ABSBShinyData.RData")
 load(file ="/home/nikolaeva/absb_bup/results/integration/integrated_int_attributes_web_net.RData")
 shinyUI(fluidPage(
   headerPanel(
-  				'AgedBrainSYSBIO data collection',
-   				 tags$head(
-						tags$img(src='Logo_AgedBrainSysbio.png', align="left", width="18%"),
-    						tags$img(src='banniere.jpg',align="left"),
-    						tags$script(src='dTable.js'),
-   						tags$link(rel='stylesheet', type='text/css', href='dTable.css')
-    		 				)
-   			),
+  	'AgedBrainSYSBIO data collection',
+   	tags$head(
+	tags$img(src='Logo_AgedBrainSysbio.png', align="left", width="18%"),
+   	tags$img(src='banniere.jpg',align="left"),
+    	tags$script(src='dTable.js'),
+   	tags$link(rel='stylesheet', type='text/css', href='dTable.css')
+    		 )
+   	),
  title = 'AgedBrainSYSBIO data collection',
-  sidebarLayout(
-    			sidebarPanel(width=3,
-				conditionalPanel(
-        						'input.dataset === "Introduction"',
-								p('Introduction')
-     	 						),
+ sidebarLayout(
+    	sidebarPanel(width=3,
+		conditionalPanel(
+        			'input.dataset === "Introduction"',
+				p('Introduction')
+     	 			),
 
-     			conditionalPanel(
-       							'input.dataset === "Integrated data collection"',
- 	 							checkboxGroupInput('show_vars_intnet',p('Choose columns to display:'),
-                           							names(net), 
-                           							selected =c("gene_name.A","gene_name.B","ensg.A","ensg.B","score","interaction_type","data_source","biotype.A","biotype.B","SNP_id.A",
+     		conditionalPanel(
+       				'input.dataset === "Integrated data collection"',
+ 	 			checkboxGroupInput('show_vars_intnet',
+				p('Choose columns to display:'),
+                                names(net), 
+                           	selected =c("gene_name.A","gene_name.B","ensg.A","ensg.B","score","interaction_type","data_source","biotype.A","biotype.B","SNP_id.A",
 "GWAS_pvalue.A","ps_pval.A","SNP_id.B","GWAS_pvalue.B", "ps_pval.B"))  
-                                                  ),
-				conditionalPanel(
-        						'input.dataset === "Other resources"',
-        						p('Links to the analysis web-tools. Links to the EMBL-EBI BioModels,protein summaries from data resources in EMBL-EBI  Proteomics Services Team
-	 								and the description of the selected pathways by The Babraham Institute'),
-								img(src='EMBL_EBI_Logo_black.png', align="left", width="50%",align="middle"),
-								img(src='BI-logo_3_1.png', align="left", width="50%",align="middle")
-      							),
-				conditionalPanel(
-       							'input.dataset === "Data&Downloads"',
-        						p('Data description and downloads')
-     							),
-	 			conditionalPanel(
-        						'input.dataset === "Help"',
-       							p('Discribes meaning of the values in the columns of the integrated dataset')
-								)
-    			),
+                                 ),
+		     
+		conditionalPanel(
+        			'input.dataset === "Other resources"',
+        			p('Links to the analysis web-tools. Links to the EMBL-EBI BioModels,protein summaries from data resources in EMBL-EBI  Proteomics Services Team
+	 			and the description of the selected pathways by The Babraham Institute'),
+				img(src='EMBL_EBI_Logo_black.png', align="left", width="50%",align="middle"),
+				img(src='BI-logo_3_1.png', align="left", width="50%",align="middle")
+      				),
+		     
+		conditionalPanel(
+       				'input.dataset === "Data&Downloads"',
+        			p('Data description and downloads')
+     				),
+		     
+	 	conditionalPanel(
+        			'input.dataset === "Help"',
+       				p('Discribes meaning of the values in the columns of the integrated dataset')
+				)
+    		),
+	 
  mainPanel(
     # title = 'AgedBrainSYSBIO data collection',
     		tabsetPanel(
                         id = 'dataset',  
-						tabPanel('Introduction',style = "overflow:hidden;", 
-								h4("Welcome to AgedBrainSYSBIO database!"),
-								br(),
+			tabPanel('Introduction',style = "overflow:hidden;", 
+				h4("Welcome to AgedBrainSYSBIO database!"),
+				br(),
+				 
+				h4("Data collection"),
+				 p("Diverse experiments have been performed to understand the underlying mechanisms of the Alzheimer's disease. 
+				These experiments are carried out by the scientists working in different domains such as proteomics, molecular 
+				biology, clinical diagnostics, genomics etc. The results of such experiments 
+				are stored in the databases designed for collecting the data of similar types. 
+				However, these disease-related data sets are not gathered into a single repository,making it difficult to get a systems 
+				view of the molecular elements and interactions that are involved in the disease."),
+				br(),
+				img(src='Data_integration_Figure1.png', align="left", width="70%",align="middle"),
+		     		br(),br(),
 
-								h4("Data collection"),
-									p("Diverse experiments have been performed to understand the underlying mechanisms of the Alzheimer's disease. 
-									These experiments are carried out by the scientists working in different domains such as proteomics, molecular 
-									biology, clinical diagnostics, genomics etc. 
-									The results of such experiments 
-									are stored in the databases designed for collecting the data of similar types. 
-									However, these disease-related data sets are not gathered into a single repository,making it difficult to get a systems 
-									view of the molecular elements and interactions that are involved in the disease. 
-			 					"),
-								br(),
-								img(src='Data_integration_Figure1.png', align="left", width="70%",align="middle"),
-		     					br(),br(),
+				h4("Data integration"),
+				p(
+				"As a tool to overcome such limitations in the case of research related to Alzheimer’s disease, we present here an integrated dataset collected into a central repository by the AgedBrainSYSBIO 
+				consortium.
+				This data and tools resource was created to integrate Alzheimer’s disease related data from well known public data collections, as well as novel data sets generated by the members of 
+				AgedBrainSYSBIO consortium.
+				Integrated data collection combines 20 distinct datasets of 6 data types originating from 9 data sources. Data types include protein-protein interactions, gene co-expression, epistasis, 
+				genome-wide association studies (GWAS), gene expression in different brain regions, and positive selection data. 
+				We apply transformation-based integration to represent individual datasets in a consistent manner, and propose a way for sharing combined information. 
+				Transformation-based integration combines multiple data sets after transforming each data type into an intermediate form, such as a graph."),
+		        	br(),br(),
+				img(src='Data_integration_Figure2.png', align="left", width="70%",align="middle"),
+				br(),br(),
 
-								h4("Data integration"),
-									p(
-"As a tool to overcome such limitations in the case of research related to Alzheimer’s disease, we present here an integrated dataset collected into a central repository by the AgedBrainSYSBIO 
-consortium.
-This data and tools resource was created to integrate Alzheimer’s disease related data from well known public data collections, as well as novel data sets generated by the members of 
-AgedBrainSYSBIO consortium.
-Integrated data collection combines 20 distinct datasets of 6 data types originating from 9 data sources. Data types include protein-protein interactions, gene co-expression, epistasis, 
-genome-wide association studies (GWAS), gene expression in different brain regions, and positive selection data. 
-We apply transformation-based integration to represent individual datasets in a consistent manner, and propose a way for sharing combined information. 
-Transformation-based integration combines multiple data sets after transforming each data type into an intermediate form, such as a graph."),
-		        				br(),br(),
-								img(src='Data_integration_Figure2.png', align="left", width="70%",align="middle"),
-								br(),br(),
+				h4("Data sharing"),
+				p("We structure, filter and combine selected data, taking into account its incompleteness and timestamps’ difference in an attempt to harmonise the existing data collections. We aim to  provide a 
+       				trustworthy, relevant resource that researchers could effectively work with. "),
+				br(),br(),
+				img(src='Data_integration_Figure3.png', align="left", width="70%",align="middle"),
+				br(),br(),br(),br(),br(),br(),br(),
+				p(img(src='european_flag_blueyellow_standard.jpg',height="10%", width="8%",align="right"),
+				span("AgedBrainSYSBIO has received funding from the European Union's Seventh Framework Programme ",
+				style="float: right; vertical-align: bottom;padding-right:10px"),
+				span(" technological development and demonstration under grant agreement No 305299 ",
+			        style="float: right; vertical-align: bottom;padding-right:10px"))
+		),
 
-								h4("Data sharing"),
-									p(
-"We structure, filter and combine selected data, taking into account its incompleteness and timestamps’ difference in an attempt to harmonise the existing data collections. We aim to  provide a 
-trustworthy, relevant resource that researchers could effectively work with. "),
-									br(),br(),
-									img(src='Data_integration_Figure3.png', align="left", width="70%",align="middle"),
-									br(),br(),br(),br(),br(),br(),br(),
-								p(img(src='european_flag_blueyellow_standard.jpg',height="10%", width="8%",align="right"),
-									span("AgedBrainSYSBIO has received funding from the European Union's Seventh Framework Programme ",
-										style="float: right; vertical-align: bottom;padding-right:10px"),
-									span(" technological development and demonstration under grant agreement No 305299 ",
-										style="float: right; vertical-align: bottom;padding-right:10px"))
-		#	img(src='european_flag_blueyellow_standard.jpg', width="10%",align="right")
-								),
+	 	tabPanel('Integrated data collection',
+	 		         dataTableOutput("table9")
+	 		),		
+	 		
+		tabPanel('Other resources',
+			         br(),
+				h4("AgedBrainSYSBIO: models related to neurodegenerative diseases"),
+				br(),
+				img(src='biomodels.png', align="left", width="70%",align="middle"),
+				br(),br(),
+				p("Collection of mathematical models from the literature (curated and non-curated)
+				which are related to: Alzheimer's disease , Huntington's disease , Parkinson's disease , amyotrophic lateral sclerosis , 
+				neurodegenerative disease and tauopathy."),
+				p("Please visit the AgedBrainSYSBIO collection of models related to neurodegenerative disease by following the link below:"),
+				a("BioModels Database",href="http://www.ebi.ac.uk/biomodels-main/agedbrain",target="_blank"),
+				br(),br(),
+				h4("Protein summaries from data resources in EMBL-EBI Proteomics Services Team"),
+				br(),
+				img(src='protein_summary.png', align="left", width="70%",align="middle"),
+				br(),br(),
+				a("BIN1",href="http://www.reactome.org/content/detail/R-HSA-8868265",target="_blank"),
+				br(),
+				a("TAU(cytosol)",href="http://www.reactome.org/content/detail/R-ALL-159420#Homo%20sapiens",target="_blank"),
+				br(),
+                                a("TAU(peroxisomal matrix)",href="http://www.reactome.org/content/detail/R-ALL-193513#Homo%20sapiens",target="_blank"),
+                                br(),
+                                a("TAU(extracellular region)",href="http://www.reactome.org/content/detail/R-ALL-352014#Homo%20sapiens",target="_blank"),
+                                br(),
+				a("FYN",href="http://www.reactome.org/content/detail/R-HSA-200917",target="_blank"),
+				br(),
+				a("APP(endoplasmic reticulum lumen)",href="http://www.reactome.org/content/detail/R-HSA-8956696",target="_blank"),
+				br(),
+				a("APP(extracellular region)",href="http://www.reactome.org/content/detail/R-HSA-976740",target="_blank"),
+                                br(),
+				a("LRRK2",href="http://www.reactome.org/content/detail/R-HSA-5661173",target="_blank"),
+				br(),br(),
 
-	 				    tabPanel('Integrated data collection',
-	 							dataTableOutput("table9")
-	 							),		
-	 				    #Uniprtot goes to the integrated table
-				 		#tabPanel('UniProt',
-				       	#	dataTableOutput("table8")
-				       	#		),
+				h4("Selected AgedBrainSYSBIO Pathways"),
+				p("Relevant signalling pathways and metabolic networks were selected based on the existing
+				knowledge on Alzheimer aetiology and symptomatology."),
+				br(),
+				img(src='BI-logo_3_1.png', align="left", width="30%",align="middle"),
+				br(),br(),
+				a("Glutamate Signalling Pathway",
+				href="http://lenoverelab.org/projects/AgedBrainSYSBIO/pathways/Glutamate", target="_blank"),
+				br(),
+				a("Amyloid fibril formation pathway",href="http://lenoverelab.org/projects/AgedBrainSYSBIO/pathways/Amyloid",target="_blank"),
+				br(),
+				a("PIP3/AKT pathway",href="http://lenoverelab.org/projects/AgedBrainSYSBIO/pathways/PIP3AKT",target="_blank"),
+				br(),
+				a("MAP kinase pathway",href="http://lenoverelab.org/projects/AgedBrainSYSBIO/pathways/MAPK",target="_blank"),
+				br(),
+				a("Endocytic pathway",href="http://lenoverelab.org/projects/AgedBrainSYSBIO/pathways/endocytosis",target="_blank"),
+				br(),
+				a("Immune System",href="http://lenoverelab.org/projects/AgedBrainSYSBIO/pathways/immunesystem",target="_blank"),
+				br(),
+				a("Apoptotic cleavage of cellular proteins pathway",href="http://lenoverelab.org/projects/AgedBrainSYSBIO/pathways/Apoptosis",target="_blank"),
+				br(),
+				a("Oxidative stress induced senescence pathway",href="http://lenoverelab.org/projects/AgedBrainSYSBIO/pathways/OxidativeStress",target="_blank"),
+				br(),
+				a("Cell junction organization pathway",href="http://lenoverelab.org/projects/AgedBrainSYSBIO/pathways/cellJunction",target="_blank"),
+				br(),
+				a("Gap junction trafficking and regulation pathways",href="http://lenoverelab.org/projects/AgedBrainSYSBIO/pathways/GapJunction",target="_blank"),
+				br()
+				),
 
-						tabPanel('Other resources',
-								br(),
-								h4("AgedBrainSYSBIO: models related to neurodegenerative diseases"),
-									br(),
-									img(src='biomodels.png', align="left", width="70%",align="middle"),
-									br(),br(),
-									p("Collection of mathematical models from the literature (curated and non-curated)
-					 					which are related to: Alzheimer's disease , Huntington's disease , Parkinson's disease , amyotrophic lateral sclerosis , 
-										neurodegenerative disease and tauopathy."),
-									p("Please visit the AgedBrainSYSBIO collection of models related to neurodegenerative disease by following the link below:"),
-									a("BioModels Database",href="http://www.ebi.ac.uk/biomodels-main/agedbrain",target="_blank"),
-									br(),br(),
-								h4("Protein summaries from data resources in EMBL-EBI Proteomics Services Team"),
-									br(),
-									img(src='protein_summary.png', align="left", width="70%",align="middle"),
-									br(),br(),
-									a("BIN1",href="http://www.reactome.org/content/detail/R-HSA-8868265",target="_blank"),
-									br(),
-									a("TAU(cytosol)",href="http://www.reactome.org/content/detail/R-ALL-159420#Homo%20sapiens",target="_blank"),
-									br(),
-                                                                        a("TAU(peroxisomal matrix)",href="http://www.reactome.org/content/detail/R-ALL-193513#Homo%20sapiens",target="_blank"),
-                                                                        br(),
-                                                                        a("TAU(extracellular region)",href="http://www.reactome.org/content/detail/R-ALL-352014#Homo%20sapiens",target="_blank"),
-                                                                        br(),
-									a("FYN",href="http://www.reactome.org/content/detail/R-HSA-200917",target="_blank"),
-									br(),
-									a("APP(endoplasmic reticulum lumen)",href="http://www.reactome.org/content/detail/R-HSA-8956696",target="_blank"),
-									br(),
-									a("APP(extracellular region)",href="http://www.reactome.org/content/detail/R-HSA-976740",target="_blank"),
-                                                                        br(),
-									a("LRRK2",href="http://www.reactome.org/content/detail/R-HSA-5661173",target="_blank"),
-									br(),br(),
-								h4("Selected AgedBrainSYSBIO Pathways"),
-									p("Relevant signalling pathways and metabolic networks were selected based on the existing
-										knowledge on Alzheimer aetiology and symptomatology."),
-									br(),
-									img(src='BI-logo_3_1.png', align="left", width="30%",align="middle"),
-									br(),br(),
-									a("Glutamate Signalling Pathway",
-										href="http://lenoverelab.org/projects/AgedBrainSYSBIO/pathways/Glutamate", target="_blank"),
-									br(),
-									a("Amyloid fibril formation pathway",href="http://lenoverelab.org/projects/AgedBrainSYSBIO/pathways/Amyloid",target="_blank"),
-									br(),
-					       			a("PIP3/AKT pathway",href="http://lenoverelab.org/projects/AgedBrainSYSBIO/pathways/PIP3AKT",target="_blank"),
-									br(),
-					        		a("MAP kinase pathway",href="http://lenoverelab.org/projects/AgedBrainSYSBIO/pathways/MAPK",target="_blank"),
-									br(),
-					       			a("Endocytic pathway",href="http://lenoverelab.org/projects/AgedBrainSYSBIO/pathways/endocytosis",target="_blank"),
-									br(),
-					        		a("Immune System",href="http://lenoverelab.org/projects/AgedBrainSYSBIO/pathways/immunesystem",target="_blank"),
-									br(),
-					        		a("Apoptotic cleavage of cellular proteins pathway",href="http://lenoverelab.org/projects/AgedBrainSYSBIO/pathways/Apoptosis",target="_blank"),
-									br(),
-					        		a("Oxidative stress induced senescence pathway",href="http://lenoverelab.org/projects/AgedBrainSYSBIO/pathways/OxidativeStress",target="_blank"),
-									br(),
-					        		a("Cell junction organization pathway",href="http://lenoverelab.org/projects/AgedBrainSYSBIO/pathways/cellJunction",target="_blank"),
-									br(),
-					        		a("Gap junction trafficking and regulation pathways",href="http://lenoverelab.org/projects/AgedBrainSYSBIO/pathways/GapJunction",target="_blank"),
-									br()
-								),
-
-      					tabPanel('Data&Downloads',              
-								h3("Data description"),
-								p("The integrated data set brings together Alzheimer's disease related data from well known public collections, as well as novel 
-data sets generated by the members of AgedBrainSYSBIO consortium.
-It comprises 20 original datasets of 6 data types originating from 9 data sources."),	
-								h3("Download integrated data collection:"),
+      		tabPanel('Data&Downloads',              
+				h3("Data description"),
+				p("The integrated data set brings together Alzheimer's disease related data from well known public collections, as well as novel 
+				data sets generated by the members of AgedBrainSYSBIO consortium.
+				It comprises 20 original datasets of 6 data types originating from 9 data sources."),	
+				h3("Download integrated data collection:"),
 									
-									h4("Integrated data collection"),
-									p("Integrated data collection. Combined data about interactions and genes.",br(),
-									downloadLink("downloadDataINTDS", "Integrated dataset with attributes")),
+				h4("Integrated data collection"),
+				p("Integrated data collection. Combined data about interactions and genes.",br(),
+				downloadLink("downloadDataINTDS", "Integrated dataset with attributes")),
 								
-									p("Interactions dataset file. Interactions are described based in Ensembl gene identifiers.", br(),
-									downloadLink("downloadDataINT", "Integrated dataset. Interactions.")),
+				p("Interactions dataset file. Interactions are described based in Ensembl gene identifiers.", br(),
+				downloadLink("downloadDataINT", "Integrated dataset. Interactions.")),
 									
-									p("Gene attributes file. Deascribes the aggregated information about the genes present in the dataset.", br(),
-									downloadLink("downloadDataNATTR", "Integrated dataset. Gene attributes")),
+				p("Gene attributes file. Deascribes the aggregated information about the genes present in the dataset.", br(),
+				downloadLink("downloadDataNATTR", "Integrated dataset. Gene attributes")),
 									
-								h3("Download original datasets:"),
-									h4("Epistatic interactions"),
-									p("ADNI_VER is a data set of epistatic effects of pairs of SNPs on change in ventricle volume, detected in ADNI consortium patients. It is computed based on genotyping and longitudinal brain imaging data that were downloaded from the ADNI database  provided by the ADNI 
-									consortium. Detailed information about ADNI can be found at www.adni-info.org." ,br(),	
-								       	downloadLink("downloadDataADNIVER", "Epistasis Alzheimer’s Disease Neuroimaging Initiative (ADNI_VER)")),
-									 p("HBTRC is a dataset of epistatic interactions between SNPs associated with Braak score in a cohort, available from the
-									Harvard Brain Tissue Resource Center.", br(),
-									downloadLink("downloadDataHBTRC", "Epistasis Harvard Brain Tissue Resource Center (HBTRC)")),
-									p("TGEN is a data set of epistatic interactions between pairs of SNPs associated with Braak score, which were detected	
-									by our consortium through genome-wide analysis of epistatic effects in data from an AD case-control cohort 
-									available from the Translational Genomics Research Institute",br(),
-									downloadLink("downloadDataTGEN", "Epistasis Translational Genomics Research Institute (TGEN)")),
-									p("Data set is the results of the analysis of epistatic effects on quantitative traits of 400 Late Onset Alzheimer's 
-									Disease patients. We used data from the ADNI cohort, analysing the relation between GWAS genotypes and the set of 23 
-									cognitive traits regularly assessed in these patients.", br(),
-									downloadLink("downloadDataADNICOG", "Epistasis cognitive traits (ADNI_CT)")),
+				h3("Download original datasets:"),
+				h4("Epistatic interactions"),
+				p("ADNI_VER is a data set of epistatic effects of pairs of SNPs on change in ventricle volume, detected in ADNI consortium patients. It is computed based on genotyping and longitudinal brain imaging data that were downloaded from the ADNI database  provided by the ADNI 
+				consortium. Detailed information about ADNI can be found at www.adni-info.org." ,br(),	
+				downloadLink("downloadDataADNIVER", "Epistasis Alzheimer’s Disease Neuroimaging Initiative (ADNI_VER)")),
+				p("HBTRC is a dataset of epistatic interactions between SNPs associated with Braak score in a cohort, available from the
+				Harvard Brain Tissue Resource Center.", br(),
+				downloadLink("downloadDataHBTRC", "Epistasis Harvard Brain Tissue Resource Center (HBTRC)")),
+				p("TGEN is a data set of epistatic interactions between pairs of SNPs associated with Braak score, which were detected	
+				by our consortium through genome-wide analysis of epistatic effects in data from an AD case-control cohort 
+				available from the Translational Genomics Research Institute",br(),
+				downloadLink("downloadDataTGEN", "Epistasis Translational Genomics Research Institute (TGEN)")),
+				p("Data set is the results of the analysis of epistatic effects on quantitative traits of 400 Late Onset Alzheimer's 
+				Disease patients. We used data from the ADNI cohort, analysing the relation between GWAS genotypes and the set of 23 
+				cognitive traits regularly assessed in these patients.", br(),
+				downloadLink("downloadDataADNICOG", "Epistasis cognitive traits (ADNI_CT)")),
 									
-									h4("Protein-protein interactions"),
-									p("PBA is a data set of newly characterised PPIs involved in brain ageing processes including interactions between gene 
-									products from late-onset Alzheimer disease genome-wide association study (LOAD-GWAS). 
-									It is obtained using yeast two hybrid (Y2H) method.", br(),
-									downloadLink("downloadDataPBA", "PPI involved in brain ageing (PBA)" )),
-								p("Dataset contains information about medium and highly confident protein-protein interactions (PPI) and protein-protein complex 
-								interactions (PCI) in human that are available from IntAct molecular interaction database.",br(),
-									downloadLink("downloadDataIAH", "PPI from IntAct in human (IAH)")),
-									p("ADIA is a subset of the expert curated PPI dataset based on the proteins with an association to Alzheimer’s disease 
-									available from IntAct molecular interaction database.", br(),
-									a("Alzheimer's disease PPI from IntAct (ADIA)",
-										href="http://www.ebi.ac.uk/intact/query/annot:%22dataset:alzheimers%22?conversationContext=2",
-										target="_blank")),
-							       	p("The dataset contains automatically selected protein-protein interactions from IntAct database with an established role 
-								in the presynapse. A selected set of interactions is comprised of protein pairs where at least one protein has established link to 
-								the synapse.",br(), 
-                                                               a("Synapse PPI from IntAct (SIA)",
-                                                                                href="http://www.ebi.ac.uk/intact/query/annot:%22dataset:synapse%22?conversationContext=2",
-                                                                                target="_blank")),
-								h4("Positive Darwinian selection"),
-								p("Evolutionary dynamics in genes that are associated with Alzheimer’s disease.",br(),
-								downloadLink("downloadDataPS", "Positive Darwinian selection")),	
+				h4("Protein-protein interactions"),
+				p("PBA is a data set of newly characterised PPIs involved in brain ageing processes including interactions between gene 
+				products from late-onset Alzheimer disease genome-wide association study (LOAD-GWAS). 
+				It is obtained using yeast two hybrid (Y2H) method.", br(),
+				downloadLink("downloadDataPBA", "PPI involved in brain ageing (PBA)" )),
+				p("Dataset contains information about medium and highly confident protein-protein interactions (PPI) and protein-protein complex 
+				interactions (PCI) in human that are available from IntAct molecular interaction database.",br(),
+				downloadLink("downloadDataIAH", "PPI from IntAct in human (IAH)")),
+				p("ADIA is a subset of the expert curated PPI dataset based on the proteins with an association to Alzheimer’s disease 
+				available from IntAct molecular interaction database.", br(),
+				a("Alzheimer's disease PPI from IntAct (ADIA)",
+				href="http://www.ebi.ac.uk/intact/query/annot:%22dataset:alzheimers%22?conversationContext=2",
+				target="_blank")),
+				p("The dataset contains automatically selected protein-protein interactions from IntAct database with an established role 
+				in the presynapse. A selected set of interactions is comprised of protein pairs where at least one protein has established link to 
+				the synapse.",br(), 
+                                 a("Synapse PPI from IntAct (SIA)",
+                                 href="http://www.ebi.ac.uk/intact/query/annot:%22dataset:synapse%22?conversationContext=2",
+                                 target="_blank")),
+				 h4("Positive Darwinian selection"),
+				 p("Evolutionary dynamics in genes that are associated with Alzheimer’s disease.",br(),
+				downloadLink("downloadDataPS", "Positive Darwinian selection")),	
 								
-								h4("Gene expression in the healthy brain from Allen Brain atlas"),
-								p("Gene expression values in 221 human brain regions.",br(),
-								a("H0351.1009",href="http://human.brain-map.org/api/v2/well_known_file_download/178238359",target="_blank"),br(),
-								a("H0351.1012",href="http://human.brain-map.org/api/v2/well_known_file_download/178238316",target="_blank"),br(),
-								a("H0351.1015",href="http://human.brain-map.org/api/v2/well_known_file_download/178238266",target="_blank"),br(),
-								a("H0351.1016",href="http://human.brain-map.org/api/v2/well_known_file_download/178236545",target="_blank")),
+				h4("Gene expression in the healthy brain from Allen Brain atlas"),
+				p("Gene expression values in 221 human brain regions.",br(),
+				a("H0351.1009",href="http://human.brain-map.org/api/v2/well_known_file_download/178238359",target="_blank"),br(),
+				a("H0351.1012",href="http://human.brain-map.org/api/v2/well_known_file_download/178238316",target="_blank"),br(),
+				a("H0351.1015",href="http://human.brain-map.org/api/v2/well_known_file_download/178238266",target="_blank"),br(),
+				a("H0351.1016",href="http://human.brain-map.org/api/v2/well_known_file_download/178236545",target="_blank")),
 								
 
-								h4("GWAS in Alzheimer's disease"),
-								p("Genome-wide association study performed by the International Genomics of Alzheimer's Project",br(),
-								a("GWAS in Alzheimer's disease", href="http://web.pasteur-lille.fr/en/recherche/u744/igap/igap_download.php",target="_blank")),
+				h4("GWAS in Alzheimer's disease"),
+				p("Genome-wide association study performed by the International Genomics of Alzheimer's Project",br(),
+				a("GWAS in Alzheimer's disease", href="http://web.pasteur-lille.fr/en/recherche/u744/igap/igap_download.php",target="_blank")),
 								
-								h4("Microarray gene expression from ArrayExpress"),
-								p("
-								Affymetrix GeneChip Human Genome U133 Plus 2.0 microarray gene expression data sets related to Alzheimer's disease studies.",br(),
-								a("E-MEXP-2280", href="http://www.ebi.ac.uk/arrayexpress/experiments/E-MEXP-2280/", target="_blank"),br(),
-								a("E-GEOD-5281", href="http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-5281/", target="_blank"),br(),
-								a("E-GEOD-4757", href="http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-4757/", target="_blank"),br(),
-								a("E-GEOD-29652", href="http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-29652/", target="_blank"),br(),
-								a("E-GEOD-28146", href="http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-28146/", target="_blank"),br(),
-								a("E-GEOD-18309", href="http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-18309/", target="_blank")),br()
+				h4("Microarray gene expression from ArrayExpress"),
+				p("
+				Affymetrix GeneChip Human Genome U133 Plus 2.0 microarray gene expression data sets related to Alzheimer's disease studies.",br(),
+				a("E-MEXP-2280", href="http://www.ebi.ac.uk/arrayexpress/experiments/E-MEXP-2280/", target="_blank"),br(),
+				a("E-GEOD-5281", href="http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-5281/", target="_blank"),br(),
+				a("E-GEOD-4757", href="http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-4757/", target="_blank"),br(),
+				a("E-GEOD-29652", href="http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-29652/", target="_blank"),br(),
+				a("E-GEOD-28146", href="http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-28146/", target="_blank"),br(),
+				a("E-GEOD-18309", href="http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-18309/", target="_blank")),br()
 
 
-	),
-		       			tabPanel('Help',
-h4("Interactions are described by the following parameters:"),
+	 		),
 
-		       				h5(em("{ensg.A, ensg.B, score, interaction type, data source}")),
-						p("where",br(),em(strong(" ensg1, ensg2"))," - are the ENSG IDs associated to the two interacting entities,"),
-p(strong(em("score")) ,"- is a continuous numerical evaluation of the importance of the interaction
-that comes from the data set(e.g. strength, significance,"),
-p(strong(em("interaction type"))," - is a categorical value indicating the type of relation,"),
-p(strong(em("data source"))," - is the short name for the source of the interaction."),
+		tabPanel('Help',
+				h4("Interactions are described by the following parameters:"),
 
-br(),br(),
+		       		h5(em("{ensg.A, ensg.B, score, interaction type, data source}")),
+				p("where",br(),em(strong(" ensg1, ensg2"))," - are the ENSG IDs associated to the two interacting entities,"),
+				p(strong(em("score")) ,"- is a continuous numerical evaluation of the importance of the interaction
+				that comes from the data set(e.g. strength, significance,"),
+				p(strong(em("interaction type"))," - is a categorical value indicating the type of relation,"),
+				p(strong(em("data source"))," - is the short name for the source of the interaction."),
 
-h4("Individual interactors(genes) are described by the following parameters:"),
+				br(),br(),
 
-h5(em("{ensg, gene name, SNP id, GWAS p-value, gene type, ps p-value, region1, ...,  region221}")),
-                                                p("where",br(),em(strong("ensg"))," - is the Ensembl gene identifier of the gene associated to the interactor,"),
-p(strong(em("gene name")) ,"- is the gene name identifier associated with the corresponding Ensembl
-gene identifier,"), 
-p(strong(em("SNP id"))," - in case of a SNP interactor, is the identifier of the SNP id,"),
-p(strong(em("GWAS p-value"))," - in case of a SNP interactor, is the p-value of association with disease,"),
-p(strong(em("gene type,"))," - is the biotype of the gene associated to the interactor, according to
-the Ensembl annotation (e.g. protein coding, long non-coding),"),
-p(strong(em("ps p-value"))," - p-value associated with positive Darwinian selection,"),
-p(strong(em("region1, ...,  region221"))," - are  aggregated expression scores in each of 221 regions of human brain , provided by the Allen Institute for Brain Studies"),
-br(),
-p("Please note that web version of the dataset displays aggregated gene expression only in the hippocampal regions dentate gyrus (DG), CA1, CA2 and CA3.")
-)
-		       				#add help descriptio later
-#								dataTableOutput("help"))#,
-   								)
+				h4("Individual interactors(genes) are described by the following parameters:"),
 
-  			)#,
+				h5(em("{ensg, gene name, SNP id, GWAS p-value, gene type, ps p-value, region1, ...,  region221}")),
+                                p("where",br(),em(strong("ensg"))," - is the Ensembl gene identifier of the gene associated to the interactor,"),
+				p(strong(em("gene name")) ,"- is the gene name identifier associated with the corresponding Ensembl
+				gene identifier,"), 
+				p(strong(em("SNP id"))," - in case of a SNP interactor, is the identifier of the SNP id,"),
+				p(strong(em("GWAS p-value"))," - in case of a SNP interactor, is the p-value of association with disease,"),
+				p(strong(em("gene type,"))," - is the biotype of the gene associated to the interactor, according to
+				the Ensembl annotation (e.g. protein coding, long non-coding),"),
+				p(strong(em("ps p-value"))," - p-value associated with positive Darwinian selection,"),
+				p(strong(em("region1, ...,  region221"))," - are  aggregated expression scores in each of 221 regions of human brain , provided by the Allen Institute for Brain Studies"),
+				br(),
+				p("Please note that web version of the dataset displays aggregated gene expression only in the hippocampal regions dentate gyrus (DG), CA1, CA2 and CA3.")
+			)
+   			)
+
+  			)
    		)
 	)
 )
