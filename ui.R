@@ -131,6 +131,27 @@ shinyUI(fluidPage(
                                 br(),
 				a("LRRK2",href="http://www.reactome.org/content/detail/R-HSA-5661173",target="_blank"),
 				br(),br(),
+				
+				h4("Protein sequence and functional information"),
+				br(),
+				img(src='uniprot.png', align="left", width="50%",align="middle"),
+				br(),
+				p("The UniProt Knowledgebase (UniProtKB) is the central hub for the collection of functional information on proteins, with accurate, consistent and rich annotation."),
+				p("Please visit the UniProt following the link below:"),
+                                a("UniProt",href="http://www.uniprot.org/",target="_blank"),
+                                br(),br(),
+				p("The summaries of the selected proteins related to Alzheimer's disease can be accessed following the links below:"),
+				a("BIN1",href="http://www.uniprot.org/uniprot/O00499",target="_blank"),
+                                br(),
+                                a("TAU (MAPT)",href="http://www.uniprot.org/uniprot/P10636",target="_blank"),
+                                br(),
+                                a("FYN",href="http://www.uniprot.org/uniprot/P06241",target="_blank"),
+                                br(),
+                                a("APP",href="http://www.uniprot.org/uniprot/P05067",target="_blank"),
+                                br(),
+                                a("LRRK2",href="http://www.uniprot.org/uniprot/Q5S007",target="_blank"),
+                                br(),br(),
+				
 
 				h4("Selected AgedBrainSYSBIO Pathways"),
 				p("Relevant signalling pathways and metabolic networks were selected based on the existing
@@ -169,15 +190,13 @@ shinyUI(fluidPage(
 				h3("Download integrated data collection:"),
 									
 				h4("Integrated data collection"),
-				p("Integrated data collection. Combined data about interactions and genes.",br(),
+				p("Integrated data collection.",br(),
+				"Contains 3 files:",br(),
+				"Combined data about interactions and genes.",br(),
+				"Interactions dataset file.Interactions are described based in Ensembl gene identifiers.",br(),
+				"Gene attributes file. Deascribes the aggregated information about the genes present in the dataset.",br(),
 				downloadLink("downloadDataINTDS", "Integrated dataset with attributes")),
 								
-				p("Interactions dataset file. Interactions are described based in Ensembl gene identifiers.", br(),
-				downloadLink("downloadDataINT", "Integrated dataset. Interactions.")),
-									
-				p("Gene attributes file. Deascribes the aggregated information about the genes present in the dataset.", br(),
-				downloadLink("downloadDataNATTR", "Integrated dataset. Gene attributes")),
-									
 				h3("Download original datasets:"),
 				h4("Epistatic interactions"),
 				p("ADNI_VER is a data set of epistatic effects of pairs of SNPs on change in ventricle volume, detected in ADNI consortium patients. It is computed based on genotyping and longitudinal brain imaging data that were downloaded from the ADNI database  provided by the ADNI 
